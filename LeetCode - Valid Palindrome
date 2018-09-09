@@ -1,0 +1,44 @@
+//Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+//
+//Note: For the purpose of this problem, we define empty string as valid palindrome.
+//
+//Example 1:
+//
+//Input: "A man, a plan, a canal: Panama"
+//Output: true
+//Example 2:
+//
+//Input: "race a car"
+//Output: false
+
+class Solution {
+    func isPalindrome(_ s: String) -> Bool {
+        if s.isEmpty { return true }
+         let charactersToRemove = CharacterSet.alphanumerics.inverted
+        let cleanText = s.components(separatedBy: charactersToRemove).joined().lowercased()
+        print(cleanText)
+        let array = Array(cleanText)
+        if array.count < 2 { return true }
+        
+        var firstArray:Array<Character>
+        var secondArray:Array<Character>
+        let middleIndex:Int = array.count/2
+        if array.count % 2 == 0 {
+            // even number of integers
+            firstArray = Array(array[0..<middleIndex])
+            secondArray = Array(array[middleIndex...array.count-1])
+        } else {
+            // odd
+            firstArray = Array(array[0..<middleIndex])
+            secondArray = Array(array[middleIndex+1...array.count-1])
+        }
+        secondArray.reverse()
+        for i in 0..<middleIndex{
+            if firstArray[i] != secondArray[i] {
+                return false
+            }
+        }
+        
+        return true
+    }
+}
