@@ -1,0 +1,68 @@
+
+//Given a non-empty string s, you may delete at most one character. Judge whether you can make it a palindrome.
+//
+//Example 1:
+//Input: "aba"
+//Output: True
+//Example 2:
+//Input: "abca"
+//Output: True
+//Explanation: You could delete the character 'c'.
+
+class Solution {
+    func validPalindrome(_ s: String) -> Bool {
+        if s.isEmpty {return false}
+        let Orgarray = Array(s)
+        if Orgarray.count < 3 { return true }
+        var firstIndex = 0
+        var deletionHappened = false
+        var checkOnOtherSidePassed = false
+        var lastIndex = Orgarray.count-1
+        var indexStart = 0
+        var indexLast = 0
+         while firstIndex < lastIndex {
+            let firstItem = Orgarray[firstIndex]
+            let lastItem = Orgarray[lastIndex]
+            if firstItem != lastItem {
+                if deletionHappened == true {
+                    if checkOnOtherSidePassed == true {
+                        firstIndex = indexStart
+                        lastIndex = indexLast
+                        checkOnOtherSidePassed = false
+                        continue
+                    } else {
+                        return false
+                    }
+                }
+                // delete item from left
+                if Orgarray [firstIndex+1] == lastItem {
+                    firstIndex = firstIndex + 1
+                    deletionHappened = true
+                }
+                // check by deleteing from right
+                if firstItem == Orgarray[lastIndex-1] {
+                    if deletionHappened == true {
+                        checkOnOtherSidePassed = true
+                        indexStart = firstIndex
+                        indexLast = lastIndex - 2
+                    } else {
+                        lastIndex = lastIndex - 1
+                        deletionHappened = true
+                    }
+                } else {
+                    if deletionHappened == true{
+                        continue
+                    }
+                    else { return false }
+                }
+            }
+            if (firstIndex + 1 == lastIndex) || firstIndex + 2 == lastIndex || firstIndex == lastIndex{
+                return true
+            }
+            firstIndex =  firstIndex + 1
+            lastIndex = lastIndex - 1
+            
+        }
+        return false
+    }
+}
