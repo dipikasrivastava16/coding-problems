@@ -1,0 +1,29 @@
+// find all possible pairs in an Int array(nums) which add up to a target number
+
+func arrayofSum(nums:[Int], target: Int) -> [[Int]] {
+
+    var output = [[Int]]()
+
+    var lookupTable = [Int: Int]()
+
+    for i in 0..<nums.count {
+
+        let value = nums[i]
+
+        let difference = target - value
+
+        if let num = lookupTable[difference] {
+
+            output.append([num,value])
+
+        } else {
+
+            lookupTable[value] = value
+
+        }
+        
+    }
+    
+    return output
+    
+}
