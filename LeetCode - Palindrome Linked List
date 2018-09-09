@@ -1,0 +1,61 @@
+//Given a singly linked list, determine if it is a palindrome.
+//
+//Example 1:
+//
+//Input: 1->2
+//Output: false
+//Example 2:
+//
+//Input: 1->2->2->1
+//Output: true
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public var val: Int
+ *     public var next: ListNode?
+ *     public init(_ val: Int) {
+ *         self.val = val
+ *         self.next = nil
+ *     }
+ * }
+ */
+class Solution {
+    func isPalindrome(_ head: ListNode?) -> Bool {
+        
+        if head == nil {
+            return true
+        }
+        var array = [Int]()
+        var headNode = head
+            while headNode != nil {
+                array.append(headNode!.val)
+                headNode = headNode!.next
+        }
+        
+        if array.count == 1 { return true }
+        
+        var firstArray:Array<Int>
+        var secondArray:Array<Int>
+        let middleIndex:Int = array.count/2
+        if array.count % 2 == 0 {
+            // even number of integers
+            firstArray = Array(array[0..<middleIndex])
+            secondArray = Array(array[middleIndex...array.count-1])
+        } else {
+            // odd
+            firstArray = Array(array[0..<middleIndex])
+            secondArray = Array(array[middleIndex+1...array.count-1])
+        }
+        secondArray.reverse()
+        for i in 0..<middleIndex{
+            if firstArray[i] != secondArray[i] {
+                return false
+            }
+        }
+        
+        return true
+        
+    }
+}
