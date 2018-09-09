@@ -1,0 +1,50 @@
+//Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+//
+//Example:
+//
+//Input: [1,1,2]
+//Output:
+//[
+//[1,1,2],
+//[1,2,1],
+//[2,1,1]
+//]
+
+class Solution {
+   func permuteUnique(_ nums: [Int]) -> [[Int]] {
+        let sorted = nums.sorted()
+        var output =  [[Int]]()
+        if nums.count == 1 {
+            output.append([nums.first!])
+            return output
+        }
+        var prevNum:Int? = nil;
+        for i in 0..<sorted.count {
+            var arr = sorted
+            arr.remove(at: i)
+            let num = sorted[i]
+            if num == prevNum { continue }
+            prevNum = num
+            createPermutationUniq(comb: [num], appendingElements: arr, output: &output, count: sorted.count )
+        }
+        return output
+    }
+    
+    func createPermutationUniq(comb:[Int], appendingElements: [Int], output:inout [[Int]], count:Int) {
+        var prevNum:Int? = nil;
+        for i in 0..<appendingElements.count {
+            let num = appendingElements[i]
+            if num == prevNum { continue }
+            prevNum = num
+            var combination = comb
+            var arr = appendingElements
+            arr.remove(at: i)
+            combination.append(num)
+            if combination.count == count {
+                output.append(combination)
+            }
+            createPermutationUniq(comb: combination, appendingElements: arr, output: &output, count: count)
+        }
+    }
+    
+}
