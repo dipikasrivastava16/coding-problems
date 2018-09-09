@@ -1,0 +1,35 @@
+// Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+// An input string is valid if:
+
+// Open brackets must be closed by the same type of brackets.
+// Open brackets must be closed in the correct order.
+// Note that an empty string is also considered valid.
+
+class Solution {
+    func isValid(_ s: String) -> Bool {
+        if s.isEmpty {return true}
+        
+        let arrUnicode = s.unicodeScalars.filter{$0.isASCII}.map{$0.value}
+        if arrUnicode.count%2 != 0 {return false}
+        let openCloseDict = [40:41,123:125,91:93]
+        let open = openCloseDict.keys // all open brackets
+        var arrOpen = [Int]()
+        for i in 0..<arrUnicode.count {
+            let value = Int(arrUnicode[i])
+            if open.contains(value) {
+                // open bracket
+                arrOpen.append(value)
+            } else {
+                // close bracket
+                if arrOpen.isEmpty {return false}
+                if openCloseDict[arrOpen.last!] == value {
+                    // closing properly
+                    arrOpen.removeLast()
+                } else { return false }
+            }
+        }
+        if arrOpen.isEmpty {return true}
+        return false
+    }
+}
