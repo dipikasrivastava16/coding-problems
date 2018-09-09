@@ -1,0 +1,45 @@
+//Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+//
+//Example:
+//
+//Input: n = 4, k = 2
+//Output:
+//[
+//[2,4],
+//[3,4],
+//[2,3],
+//[1,2],
+//[1,3],
+//[1,4],
+//]
+
+class Solution {
+    func createCombination(comb:[Int], appendingElements: [Int], output:inout [[Int]], count:Int) {
+        for i in 0..<appendingElements.count {
+            var combination = comb
+            let arr = Array(appendingElements[i+1..<appendingElements.count])
+            combination.append(appendingElements[i])
+            if combination.count == count {
+                output.append(combination)
+            }
+            createCombination(comb: combination, appendingElements: arr, output: &output, count: count)
+        }
+        
+    }
+    func combine(_ n: Int, _ k: Int) -> [[Int]] {
+        let nums = Array(1...n)
+        var output =  [[Int]]()
+        if k == 0 || n == 0 || k > n { return output }
+        if k == 1 {
+            for num in nums {
+                output.append([num])
+            }
+            return output
+        }
+        for i in 0..<nums.count {
+            let arr = Array(nums[i+1..<nums.count])
+            createCombination(comb: [nums[i]], appendingElements: arr, output: &output, count: k )
+        }
+        return output
+    }
+}
