@@ -1,0 +1,34 @@
+// Given a roman numeral, convert it to an integer. Input is guaranteed to be within the range from 1 to 3999.
+class Solution {    
+    func romanNumber(_ char: Character) -> Int {
+        switch char{
+        case "I": return 1
+        case "V": return 5
+        case "X": return 10
+        case "L": return 50
+        case "C": return 100
+        case "D": return 500
+        case "M": return 1000
+        default: return 0
+        }
+    }
+    func romanToInt(_ s: String) -> Int {
+        if s.isEmpty {return 0}
+        let array = Array(s)
+        var lastValue = 0
+        var number = 0
+        for i in 0..<array.count {
+            let intValue = romanNumber(array[i])
+            if intValue <= lastValue {
+                // normal
+                number = number + intValue
+            } else {
+                number = number - lastValue + (intValue - lastValue)
+            }
+            lastValue = intValue
+        }
+        
+        
+        return number
+    }
+}
