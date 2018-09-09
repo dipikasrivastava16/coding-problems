@@ -1,0 +1,32 @@
+//Given an array of strings, group anagrams together.
+//
+//Example:
+//
+//Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+//Output:
+//[
+//["ate","eat","tea"],
+//["nat","tan"],
+//["bat"]
+//]
+
+class Solution {
+    func groupAnagrams(_ strs: [String]) -> [[String]]{
+        var resultArray = [[String]]()
+        var dict = Dictionary<String, Array<String>>()
+        if strs.count == 0 {return resultArray}
+        for word in strs {
+            let wordSorted = String(word.sorted())
+            if let arr = dict[wordSorted] {
+                var array = arr as [String]
+                array.append(word)
+                dict[wordSorted] = array
+            }
+            else {
+                dict[wordSorted] = [word]
+            }
+        }
+        resultArray = Array(dict.values)
+        return resultArray
+    }
+}
