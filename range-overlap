@@ -1,0 +1,20 @@
+// This is an extension on CountableClosedRange which has manual 
+// implementation of whether two range overlap or not and if they do, what is the 
+// overlapping range.
+//
+extension CountableClosedRange where Bound == Int {
+    func isIntersecting(range: CountableClosedRange<Int>) -> Bool {
+        if (self.upperBound >= range.lowerBound && self.lowerBound <= range.upperBound ) {
+            return true
+        }
+        return false
+    }
+    public func getIntersection(range: CountableClosedRange<Int>) -> CountableClosedRange<Int>? {
+        if (self.upperBound >= range.lowerBound && self.lowerBound <= range.upperBound ) {
+            let upper = self.upperBound <= range.upperBound ? self.upperBound : range.upperBound
+            let lower = self.lowerBound <= range.lowerBound ? range.lowerBound : self.lowerBound
+            return (lower...upper)
+        }
+        return nil
+    }
+}
