@@ -35,3 +35,13 @@ class Tree {
         return result
     }
 }
+class TreeNode {
+    var leftChild: TreeNode?
+    var rightChild: TreeNode?
+    var value: Int
+    init(_ value: Int, _ leftChild: TreeNode?, _ rightChild: TreeNode?) {
+        self.value = value
+        self.leftChild = leftChild
+        self.rightChild = rightChild
+    }
+}
